@@ -141,6 +141,20 @@ body {
 </div>
 
 <script>
+// --- AUDIO ALERT SETUP ---
+const alertSoundURL = "https://github.com/protectorebay/ALERTMP3/raw/main/alert.mp3";
+let lastAlertTime = 0; // timestamp posledného alertu
+
+function playAlert() {
+    const now = Date.now();
+    if (now - lastAlertTime > 5 * 60 * 1000) { // 5 minút v ms
+        const audio = new Audio(alertSoundURL);
+        audio.play();
+        lastAlertTime = now;
+    }
+}
+
+// --- RSI FETCH ---
 async function loadRSI() {
     try {
         const response = await fetch("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=200");
@@ -209,10 +223,12 @@ function updateUI(value) {
         valueEl.style.color = "#e53935";
         alertTextEl.innerText = '⚠️ OVERBOUGHT ALERT';
         alertTextEl.classList.add("blink-red");
+        playAlert();
     } else if (value <= 45) {
         valueEl.style.color = "#00c853";
         alertTextEl.innerText = '⚠️ OVERSOLD ALERT';
         alertTextEl.classList.add("blink-green");
+        playAlert();
     } else {
         valueEl.style.color = "black";
     }

@@ -219,12 +219,12 @@ function updateUI(value) {
     alertTextEl.className = '';
     alertTextEl.innerText = '';
 
-    if (value >= 55) {
+    if (value >= 50) {
         valueEl.style.color = "#e53935";
         alertTextEl.innerText = '⚠️ OVERBOUGHT ALERT';
         alertTextEl.classList.add("blink-red");
         playAlert();
-    } else if (value <= 45) {
+    } else if (value <= 48) {
         valueEl.style.color = "#00c853";
         alertTextEl.innerText = '⚠️ OVERSOLD ALERT';
         alertTextEl.classList.add("blink-green");
